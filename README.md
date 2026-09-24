@@ -30,8 +30,9 @@ sudo apt install poppler-utils tesseract-ocr
 ```
 
 Set your API key:
-```bash
-export ANTHROPIC_API_KEY=sk-ant-...
+```windows
+$env:OLLAMA_URL="http://localhost:11434"
+$env:MODEL_NAME="llama3.2"
 ```
 
 ## Run
