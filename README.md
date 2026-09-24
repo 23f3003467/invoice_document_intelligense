@@ -33,6 +33,7 @@ Set your API key:
 ```windows
 $env:OLLAMA_URL="http://localhost:11434"
 $env:MODEL_NAME="llama3.2"
+$env:NEXT_PUBLIC_API_BASE="http://127.0.0.1:8000"
 ```
 
 ## Run
