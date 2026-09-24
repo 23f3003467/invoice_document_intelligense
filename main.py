@@ -11,6 +11,7 @@ no frontend needed to prove this works.
 """
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from extraction import extract_text
 from llm_service import classify_document, extract_fields, LLMProcessingError
@@ -19,6 +20,16 @@ from models import ProcessedDocument
 from database import init_db, save_document, list_documents
 
 app = FastAPI(title="Document Intelligence Starter")
+
+# The frontend is a static index.html opened directly in the browser (file://)
+# or served from a different port — either way it's a different "origin" from
+# the API, so CORS has to be opened explicitly or every fetch() call fails silently.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")

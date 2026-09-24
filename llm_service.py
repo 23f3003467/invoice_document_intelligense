@@ -12,7 +12,7 @@ from models import ClassificationResult, DOC_TYPES, FIELD_SCHEMAS
 from pydantic import BaseModel, ValidationError
 
 client = OpenAI(
-    base_url="http://localhost:11434/v1",
+    base_url="http://192.168.176.1:11434/v1",
     api_key="ollama"
 )
 
