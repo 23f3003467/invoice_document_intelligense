@@ -10,13 +10,14 @@ import json
 from openai import OpenAI
 from models import ClassificationResult, DOC_TYPES, FIELD_SCHEMAS
 from pydantic import BaseModel, ValidationError
-
+URL=os.getenv("OLLAMA_URL", "http://192.168.176.1:11434/v1")
+MODEL_NAME=os.getenv("MODEL_NAME", "llama3.2:3b")
 client = OpenAI(
-    base_url="http://192.168.176.1:11434/v1",
+    base_url=URL,
     api_key="ollama"
 )
 
-MODEL = "llama3.2:3b" 
+MODEL = MODEL_NAME 
 
 
 class LLMProcessingError(Exception):
