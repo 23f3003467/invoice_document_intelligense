@@ -44,9 +44,10 @@ async def process_document(file: UploadFile = File(...)):
 
     file_bytes = await file.read()
     text = extract_text(file_bytes)
+    print(text)
     if not text.strip():
         raise HTTPException(422, "Could not extract any text from this document.")
-
+    print(f"Extracted {len(text)} characters of text from {file.filename}")
     try:
         classification = classify_document(text)
         fields = extract_fields(text, classification.doc_type)

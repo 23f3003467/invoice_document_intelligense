@@ -7,19 +7,54 @@ validation on the way out, with a retry if parsing fails.
 
 import os
 import json
+from dotenv import load_dotenv
 from openai import OpenAI
 from models import ClassificationResult, DOC_TYPES, FIELD_SCHEMAS
 from pydantic import BaseModel, ValidationError
-URL=os.getenv("OLLAMA_URL", "http://192.168.176.1:11434/v1")
-MODEL_NAME=os.getenv("MODEL_NAME", "llama3.2:3b")
+from huggingface_hub import HfApi
+
+
+load_dotenv()
+URL = os.getenv("URL", "https://router.huggingface.co/v1")
+
+
+MODEL_NAME = os.getenv("MODEL_NAME", "meta-llama/llama-prompt-guard-2-86m")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "groq_XXXXXXXXXXXXXXXXXXXXXXXX")
+HF_API_KEY = os.getenv("HF_API_KEY", "hf_XXXXXXXXXXXXXXXXXXXXXXXX")
+print(f"Using GROQ_URL={URL}, MODEL_NAME={MODEL_NAME}, GROQ_API_KEY={GROQ_API_KEY}, HF_API_KEY={HF_API_KEY}")
 client = OpenAI(
     base_url=URL,
-    api_key="ollama"
+    api_key=HF_API_KEY
 )
 
 MODEL = MODEL_NAME 
 
+api = HfApi(token=HF_API_KEY)
+from openai import OpenAI
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+# client = OpenAI(
+#     base_url="https://router.huggingface.co/v1",
+#     api_key=os.getenv("HF_API_KEY")
+# )
+
+# response = client.chat.completions.create(
+#     model="openai/gpt-oss-20b",
+#     messages=[
+#         {
+#             "role": "user",
+#             "content": "Say hello in one sentence."
+#         }
+#     ],
+#     max_tokens=50
+# )
+
+# print(response.choices[0].message.content)
+
+print(api.whoami())
 class LLMProcessingError(Exception):
     """Raised when the model's output can't be parsed/validated after a retry."""
     pass
